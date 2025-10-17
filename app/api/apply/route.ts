@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
         desiredUniveristy: preferredUniversity,
         father: fatherName,
         mother: motherName,
-        guardianPhone: guardianPhone,
+        guardianPhone: guardianPhone.toString(),
         relation: relationshipValue,
         disability: hasDisability === 'yes' ? true : false,
         specifyDisability: disabilityDetails
