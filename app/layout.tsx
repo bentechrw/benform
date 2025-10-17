@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: "Start your future today! Access the official ApplyWITH portal by Bentech to seamlessly submit and track your university application",
   creator: 'Bentech',
   publisher: 'Bentech',
-  metadataBase: new URL('http://bentechrw.com'),
+  metadataBase: new URL('https://applywith.bentechrw.com'),
   alternates: {
     canonical: '/',
   },

@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://applywith.bentechrw.com
+
+# Sitemaps
+Sitemap: https://applywith.bentechrw.com/sitemap.xml
