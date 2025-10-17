@@ -13,6 +13,7 @@ export default function ApplicationForm() {
     lastName: '',
     status: '',
     email: '',
+    indexNumber: '',
     phone: '',
     dateOfBirth: '',
     gender: '',
@@ -97,7 +98,7 @@ export default function ApplicationForm() {
         toast.success('Application submitted successfully!');
 
         setFormData({
-          firstName: '', lastName: '', status: '', email: '', phone: '', dateOfBirth: '',
+          firstName: '', lastName: '', status: '', email: '', indexNumber: '', phone: '', dateOfBirth: '',
           gender: '', nationality: '', idNumber: '', province: '', district: '',
           sector: '', cell: '', village: '', highSchool: '', graduationYear: '',
           combination: '', aggregateScore: '', preferredUniversity: '',
@@ -181,6 +182,21 @@ export default function ApplicationForm() {
                   className="w-full px-4 py-2 border border-gray-100 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-black"
                 />
                 {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Index Number <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="indexNumber"
+                  placeholder='e.g., 123543ACC0042020'
+                  value={formData.indexNumber}
+                  onChange={handleChange}
+                  style={{ borderColor: getBorderColor("indexNumber") }}
+                  className="w-full px-4 py-2 border border-gray-100 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-black"
+                />
+                {errors.indexNumber && <p style={{ color: "red" }}>{errors.indexNumber}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">

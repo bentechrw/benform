@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.json();
 
-    const {firstName, lastName, email, status, dateOfBirth, phone, gender, nationality, idNumber, province, district, sector, cell, village, highSchool, graduationYear, combination, aggregateScore, preferredUniversity, fatherName, motherName, guardianPhone, relationship, hasDisability, disabilityDetails} = formData;
+    const {firstName, lastName, email, indexNumber, status, dateOfBirth, phone, gender, nationality, idNumber, province, district, sector, cell, village, highSchool, graduationYear, combination, aggregateScore, preferredUniversity, fatherName, motherName, guardianPhone, relationship, hasDisability, disabilityDetails} = formData;
 
     let singleStatus: sStatus;
     switch(status){
@@ -74,6 +74,7 @@ export async function POST(req: NextRequest) {
         lastName: lastName,
         singleStatus: singleStatus,
         email: email,
+        indexNumber: indexNumber,
         phone: phone,
         dateOfBirth: dateOfBirt,
         gender: genderValue,

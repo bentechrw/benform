@@ -12,6 +12,7 @@ model UniversityApplication {
   firstName         String       @map("first_name") @db.VarChar(100)
   lastName          String       @map("last_name") @db.VarChar(100)
   email             String       @db.VarChar(150)
+  indexNumber       String       @db.VarChar(200)
   phone             String       @db.VarChar(20)
   dateOfBirth       DateTime     @map("date_of_birth")
   gender            Gender       @default(Male)
