@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model UniversityApplication {
+  id                Int          @id @default(autoincrement())
+  firstName         String       @map("first_name") @db.VarChar(100)
+  lastName          String       @map("last_name") @db.VarChar(100)
+  email             String       @db.VarChar(150)
+  phone             String       @db.VarChar(20)
+  dateOfBirth       DateTime     @map("date_of_birth") @db.Date
+  gender            Gender       @default(Male)
+  singleStatus      sStatus      @default(Single)
+  nationality       String       @db.VarChar(200)
+  nID               Int
+  province          String       @db.VarChar(200)
+  district          String       @db.VarChar(200)
+  sector            String       @db.VarChar(200)
+  cell              String       @db.VarChar(200)
+  village           String       @db.VarChar(200)
+  highSchool        String       @db.VarChar(200)
+  graduationYear    Int          @map("graduation_year")
+  combination       String       @db.VarChar(200)
+  aggregateScore    Decimal      @map("aggregate_score") @db.Decimal(5, 2)
+  desiredUniveristy String       @db.VarChar(200)
+  father            String       @db.VarChar(200)
+  mother            String       @db.VarChar(200)
+  guardianPhone     Int
+  relation          Relationship @default(Father)
+  disability        Boolean      @default(false)
+  specifyDisability String?
+
+  status    ApplicationStatus @default(PENDING)
+  createdAt DateTime          @default(now()) @map("created_at")
+}
+
+enum Gender {
+  Male
+  Female
+  Other
+}
+
+enum sStatus {
+  Single
+  Married
+  Divorced
+}
+
+enum Relationship {
+  Father
+  Mother
+  Uncle
+  Aunt
+  Sibling
+  Other
+}
+
+enum ApplicationStatus {
+  PENDING      @map("pending")
+  UNDER_REVIEW @map("under_review")
+  APPROVED     @map("approved")
+  REJECTED     @map("rejected")
+  WITHDRAWN    @map("withdrawn")
+}

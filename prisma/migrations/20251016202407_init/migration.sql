@@ -1,0 +1,33 @@
+-- CreateTable
+CREATE TABLE `UniversityApplication` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `first_name` VARCHAR(100) NOT NULL,
+    `last_name` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(150) NOT NULL,
+    `phone` VARCHAR(20) NOT NULL,
+    `date_of_birth` DATE NOT NULL,
+    `gender` ENUM('Male', 'Female', 'Other') NOT NULL DEFAULT 'Male',
+    `singleStatus` ENUM('Single', 'Married', 'Divorced') NOT NULL DEFAULT 'Single',
+    `nationality` VARCHAR(200) NOT NULL,
+    `nID` INTEGER NOT NULL,
+    `province` VARCHAR(200) NOT NULL,
+    `district` VARCHAR(200) NOT NULL,
+    `sector` VARCHAR(200) NOT NULL,
+    `cell` VARCHAR(200) NOT NULL,
+    `village` VARCHAR(200) NOT NULL,
+    `highSchool` VARCHAR(200) NOT NULL,
+    `graduation_year` INTEGER NOT NULL,
+    `combination` VARCHAR(200) NOT NULL,
+    `aggregate_score` DECIMAL(5, 2) NOT NULL,
+    `desiredUniveristy` VARCHAR(200) NOT NULL,
+    `father` VARCHAR(200) NOT NULL,
+    `mother` VARCHAR(200) NOT NULL,
+    `guardianPhone` INTEGER NOT NULL,
+    `relation` ENUM('Father', 'Mother', 'Uncle', 'Aunt', 'Sibling', 'Other') NOT NULL DEFAULT 'Father',
+    `disability` BOOLEAN NOT NULL DEFAULT false,
+    `specifyDisability` VARCHAR(191) NULL,
+    `status` ENUM('pending', 'under_review', 'approved', 'rejected', 'withdrawn') NOT NULL DEFAULT 'pending',
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
