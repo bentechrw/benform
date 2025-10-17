@@ -109,6 +109,7 @@ export default function ApplicationForm() {
       }
     } catch (error) {
       toast.error('An error occurred while submitting the application.');
+      console.error('Submission error:', error);
     } finally {
       setLoading(false);
     }
@@ -449,7 +450,7 @@ export default function ApplicationForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  University you're applying for <span className="text-red-500">*</span>
+                  University you&apos;re applying for <span className="text-red-500">*</span>
                 </label>
 
                 <input
