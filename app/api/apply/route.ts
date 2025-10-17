@@ -6,38 +6,12 @@ import {Relationship} from '@prisma/client';
 
 export async function POST(req: NextRequest) {  
   try {
-    const formData = await req.formData();
-    
-    const applicationData = {
-      firstName: formData.get('firstName') as string,
-      lastName: formData.get('lastName') as string,
-      singleStatusValue: formData.get('status'),
-      email: formData.get('email') as string,
-      phone: formData.get('phone') as string,
-      dateOfBirth: formData.get('dateOfBirth') as string,
-      gender: formData.get('gender') as string,
-      nationality: formData.get('nationality') as string,
-      idNumber: formData.get('idNumber'),
-      province: formData.get('province') as string,
-      district: formData.get('district') as string,
-      sector: formData.get('sector') as string,
-      cell: formData.get('cell') as string,
-      village: formData.get('village') as string,
-      highSchool: formData.get('highSchool') as string,
-      graduationYear: formData.get('graduationYear'),
-      combination: formData.get('combination') as string,
-      aggregateScore: formData.get('aggregateScore') as string,
-      preferredUniversity: formData.get('preferredUniversity') as string,
-      fatherName: formData.get('fatherName') as string,
-      motherName: formData.get('motherName') as string,
-      guardianPhone: formData.get('guardianPhone') as string,
-      relationship: formData.get('relationship') as string,
-      hasDisability: formData.get('hasDisability') as string,
-      disabilityDetails: formData.get('disabilityDetails') as string
-    };
+    const formData = await req.json();
+
+    const {firstName, lastName, email, status, dateOfBirth, phone, gender, nationality, idNumber, province, district, sector, cell, village, highSchool, graduationYear, combination, aggregateScore, preferredUniversity, fatherName, motherName, guardianPhone, relationship, hasDisability, disabilityDetails} = formData;
 
     let singleStatus: sStatus;
-    switch(applicationData.singleStatusValue){
+    switch(status){
       case 'SINGLE':
         singleStatus = sStatus.Single;
         break;
@@ -52,7 +26,7 @@ export async function POST(req: NextRequest) {
     }
 
     let genderValue: Gender;
-    switch(applicationData.gender){
+    switch(gender){
       case 'male':
         genderValue = Gender.Male;
         break;
@@ -67,7 +41,7 @@ export async function POST(req: NextRequest) {
     }
 
     let relationshipValue: Relationship;
-    switch(applicationData.relationship){
+    switch(relationship){
       case 'father':
         relationshipValue = Relationship.Father;
         break;
@@ -90,37 +64,37 @@ export async function POST(req: NextRequest) {
         relationshipValue = Relationship.Father;
     }
 
-    const dobString = formData.get("dateOfBirth")?.toString();
+    const dobString = dateOfBirth?.toString();
 
-    const dateOfBirth = dobString ? new Date(dobString) : undefined;
+    const dateOfBirt = new Date(dobString);
 
     await prisma.universityApplication.create({
       data:{
-        firstName: applicationData.firstName,
-        lastName: applicationData.lastName,
+        firstName: firstName,
+        lastName: lastName,
         singleStatus: singleStatus,
-        email: applicationData.email,
-        phone: applicationData.phone,
-        dateOfBirth: dateOfBirth,
+        email: email,
+        phone: phone,
+        dateOfBirth: dateOfBirt,
         gender: genderValue,
-        nationality: applicationData.nationality,
-        nID: Number(applicationData.idNumber),
-        province: applicationData.province,
-        district: applicationData.district,
-        sector: applicationData.sector,
-        cell: applicationData.cell,
-        village: applicationData.village,
-        highSchool: applicationData.highSchool,
-        graduationYear: Number(applicationData.graduationYear),
-        combination: applicationData.combination,
-        aggregateScore: applicationData.aggregateScore,
-        desiredUniveristy: applicationData.preferredUniversity,
-        father: applicationData.fatherName,
-        mother: applicationData.motherName,
-        guardianPhone: Number(applicationData.guardianPhone),
+        nationality: nationality,
+        nID: Number(idNumber),
+        province: province,
+        district: district,
+        sector: sector,
+        cell: cell,
+        village: village,
+        highSchool: highSchool,
+        graduationYear: Number(graduationYear),
+        combination: combination,
+        aggregateScore: aggregateScore,
+        desiredUniveristy: preferredUniversity,
+        father: fatherName,
+        mother: motherName,
+        guardianPhone: guardianPhone,
         relation: relationshipValue,
-        disability: applicationData.hasDisability === 'yes' ? true : false,
-        specifyDisability: applicationData.disabilityDetails
+        disability: hasDisability === 'yes' ? true : false,
+        specifyDisability: disabilityDetails
       }
     });
     return NextResponse.json({ message: 'Application submitted successfully' }, { status: 201 })

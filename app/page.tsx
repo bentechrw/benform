@@ -3,10 +3,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { z } from "zod";
 import { applicationSchema } from './validationSchema';
 import toast, { Toaster } from 'react-hot-toast';
-import { getProvinces, getDistrictsByProvince, getSectorsByDistrict, getCellsBySector, getVillagesByCell } from 'rwanda-geo-structure';
+import { getDistrictsByProvince, getSectorsByDistrict, getCellsBySector, getVillagesByCell } from 'rwanda-geo-structure';
 
 export default function ApplicationForm() {
   const [formData, setFormData] = useState({
@@ -75,46 +74,44 @@ export default function ApplicationForm() {
       });
       setErrors(fieldErrors);
       setLoading(false);
+      
       console.log("Validation errors:", fieldErrors);
       return;
     } else{
       setErrors({});
       console.log("Valid data:", result.data);
     }
-    
-    // try {
-    //   const formDataToSend = new FormData();
-      
-    //   Object.keys(formData).forEach(key => {
-    //     formDataToSend.append(key, formData[key as keyof typeof formData]);
-    //   });
 
-    //   const response = await fetch('/api/apply', {
-    //     method: 'POST',
-    //     body: formDataToSend
-    //   });
+    try {
+      const response = await fetch('/api/apply', {
+        method: 'POST',
+        body: result.data ? JSON.stringify(result.data) : null,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
 
-    //   const data = await response.json();
+      const data = await response.json();
 
-    //   if (response.ok) {
-    //     toast.success('Application submitted successfully!');
+      if (response.ok) {
+        toast.success('Application submitted successfully!');
 
-    //     setFormData({
-    //       firstName: '', lastName: '', status: '', email: '', phone: '', dateOfBirth: '',
-    //       gender: '', nationality: '', idNumber: '', province: '', district: '',
-    //       sector: '', cell: '', village: '', highSchool: '', graduationYear: '',
-    //       combination: '', aggregateScore: '', preferredUniversity: '',
-    //       fatherName: '', motherName: '', guardianPhone: '', relationship: '',
-    //       hasDisability: '', disabilityDetails: ''
-    //     });
-    //   } else {
-    //     setMessage({ type: 'error', text: data.error || 'Failed to submit application' });
-    //   }
-    // } catch (error) {
-    //   toast.error('An error occurred while submitting the application.');
-    // } finally {
-    //   setLoading(false);
-    // }
+        setFormData({
+          firstName: '', lastName: '', status: '', email: '', phone: '', dateOfBirth: '',
+          gender: '', nationality: '', idNumber: '', province: '', district: '',
+          sector: '', cell: '', village: '', highSchool: '', graduationYear: '',
+          combination: '', aggregateScore: '', preferredUniversity: '',
+          fatherName: '', motherName: '', guardianPhone: '', relationship: '',
+          hasDisability: '', disabilityDetails: ''
+        });
+      } else {
+        toast.error(data.error || 'Failed to submit application');
+      }
+    } catch (error) {
+      toast.error('An error occurred while submitting the application.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -245,9 +242,9 @@ export default function ApplicationForm() {
                   className="w-full px-4 py-2 border border-gray-100 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-black"
                 >
                   <option value="">Select Status</option>
-                  <option value="single">Single</option>
-                  <option value="married">Married</option>
-                  <option value="divorced">Divorced</option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Divorced">Divorced</option>
                 </select>
                 {errors.status && <p style={{ color: "red" }}>{errors.status}</p>}
               </div>
@@ -270,7 +267,7 @@ export default function ApplicationForm() {
                   National ID Number <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   name="idNumber"
                   value={formData.idNumber}
                   onChange={handleChange}

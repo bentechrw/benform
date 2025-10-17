@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-const singleStatusEnum = z.enum(["Single", "Married", "Divorced"]);
 const genderEnum = z.enum(["Male", "Female", "Other"]);
 const status = z.enum(["Single", "Married", "Divorced", "Other"]);
 const relationshipEnum = z.enum(["Father", "Mother", "Uncle", "Aunt", "Sibling", "Other"]);
@@ -8,8 +7,7 @@ const relationshipEnum = z.enum(["Father", "Mother", "Uncle", "Aunt", "Sibling",
 export const applicationSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
-  singleStatus: singleStatusEnum,
-  email: z.string().email(),
+  email: z.email(),
   phone: z.string().min(10, "Invalid phone number"),
   dateOfBirth: z
     .string()
@@ -19,10 +17,9 @@ export const applicationSchema = z.object({
   gender: genderEnum,
   status: status,
   nationality: z.string().min(1, "Nationality is required"),
-  idNumber: z
-    .number({ error: "National ID must be a number" })
-    .int()
-    .positive("National ID must be positive"),
+  idNumber: z.coerce.number({
+    error: "National ID must be a number",
+  }).int(),
   province: z.string().min(1, "Province is required"),
   district: z.string().min(1, "District is required"),
   sector: z.string().min(1, "Sector is required"),
@@ -44,6 +41,6 @@ export const applicationSchema = z.object({
     .int()
     .positive("Guardian phone must be positive"),
   relationship: relationshipEnum,
-  hasDisability: z.boolean(),
+  hasDisability: z.coerce.boolean(),
   specifyDisability: z.string().optional().nullable(),
 });
