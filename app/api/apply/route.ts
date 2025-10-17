@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { sStatus } from "@prisma/client";
-import { Gender } from '@prisma/client';
-import {Relationship} from '@prisma/client';
+import { Gender, Relationship, sStatus } from '@prisma/client/edge';
 
 export async function POST(req: NextRequest) {  
   try {
